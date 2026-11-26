@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Світлова ялинка</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      font-family: "Segoe UI", system-ui, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 50% 70%, rgba(31, 95, 77, 0.38), transparent 28%),
+        linear-gradient(180deg, #07182f 0%, #0c2a3d 55%, #06131f 100%);
+    }
+
+    .scene {
+      position: relative;
+      width: 100%;
+      min-height: 100vh;
+      display: grid;
+      place-items: end center;
+    }
+
+    .moon {
+      position: absolute;
+      top: 8%;
+      right: 13%;
+      width: clamp(60px, 8vw, 110px);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: #fffbd5;
+      box-shadow: 0 0 45px rgba(255, 251, 213, 0.55);
+    }
+
+    .tree {
+      position: relative;
+      width: min(70vw, 540px);
+      height: min(82vh, 780px);
+      margin-bottom: 3vh;
+      filter: drop-shadow(0 22px 28px rgba(0, 0, 0, 0.38));
+      z-index: 2;
+    }
+
+    .trunk {
+      position: absolute;
+      left: 50%;
+      bottom: 3%;
+      width: 12%;
+      height: 16%;
+      transform: translateX(-50%);
+      background: linear-gradient(90deg, #4a2817, #8c5a32 48%, #422313);
+      border-radius: 8px;
+    }
+
+    .tier {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: var(--half) solid transparent;
+      border-right: var(--half) solid transparent;
+      border-bottom: var(--height) solid var(--green);
+    }
+
+    .tier::after {
+      content: "";
+      position: absolute;
+      left: calc(var(--half) * -1);
+      top: 5px;
+      width: calc(var(--half) * 2);
+      height: var(--height);
+      border-radius: 50%;
+      background: linear-gradient(135deg, transparent 46%, rgba(255,255,255,0.09) 47%, transparent 57%);
+      clip-path: polygon(50% 0, 100% 100%, 0 100%);
+    }
+
+    .tier-1 { --half: 24%; --height: 23%; --green: #17623b; bottom: 10%; }
+    .tier-2 { --half: 21%; --height: 21%; --green: #1d7547; bottom: 27%; }
+    .tier-3 { --half: 18%; --height: 19%; --green: #258653; bottom: 43%; }
+    .tier-4 { --half: 15%; --height: 17%; --green: #30965d; bottom: 57%; }
+    .tier-5 { --half: 11%; --height: 15%; --green: #36a668; bottom: 69%; }
+
+    .star {
+      position: absolute;
+      left: 50%;
+      bottom: 82%;
+      z-index: 5;
+      width: 70px;
+      aspect-ratio: 1;
+      transform: translateX(-50%);
+      background: #ffd95a;
+      clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 56%, 79% 91%, 50% 70%, 21% 91%, 32% 56%, 2% 35%, 39% 35%);
+      filter: drop-shadow(0 0 14px #fff1a1) drop-shadow(0 0 28px rgba(255, 191, 51, 0.8));
+      animation: star-pulse 1.8s ease-in-out infinite;
+    }
+
+    .lights {
+      position: absolute;
+      inset: 12% 16% 9% 16%;
+      z-index: 4;
+      overflow: visible;
+    }
+
+    .bulb {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--color);
+      box-shadow: 0 0 8px 3px var(--color), 0 0 18px 5px var(--color);
+      animation: twinkle var(--speed) ease-in-out var(--delay) infinite;
+    }
+
+    .garland {
+      position: absolute;
+      z-index: 3;
+      left: 50%;
+      width: var(--width);
+      height: var(--height);
+      bottom: var(--bottom);
+      transform: translateX(-50%);
+      border: 3px solid rgba(255, 224, 128, 0.78);
+      border-top: 0;
+      border-left: 0;
+      border-right: 0;
+      border-radius: 0 0 50% 50%;
+      filter: drop-shadow(0 0 4px rgba(255, 218, 126, 0.8));
+    }
+
+    .snow {
+      position: fixed;
+      inset: 0;
+      z-index: 10;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .flake {
+      position: absolute;
+      top: -30px;
+      width: var(--size);
+      height: var(--size);
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+      animation: fall var(--duration) linear var(--delay) infinite;
+    }
+
+    .title {
+      position: absolute;
+      z-index: 12;
+      left: 50%;
+      bottom: 2.5%;
+      transform: translateX(-50%);
+      width: max-content;
+      margin: 0;
+      color: #fff;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(26px, 4vw, 54px);
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.75), 0 0 20px rgba(255, 255, 255, 0.22);
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.35; transform: scale(0.75); }
+      45% { opacity: 1; transform: scale(1.25); }
+    }
+
+    @keyframes star-pulse {
+      0%, 100% { transform: translateX(-50%) scale(1) rotate(-2deg); }
+      50% { transform: translateX(-50%) scale(1.12) rotate(3deg); }
+    }
+
+    @keyframes fall {
+      0% { transform: translate3d(0, -5vh, 0) rotate(0deg); }
+      100% { transform: translate3d(var(--drift), 105vh, 0) rotate(360deg); }
+    }
+
+    @media (max-width: 600px) {
+      .moon { right: 7%; }
+      .tree { width: 92vw; height: 72vh; }
+      .star { width: 52px; }
+      .bulb { width: 9px; height: 9px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .bulb, .star, .flake { animation-duration: 20s; }
+    }
+  </style>
+</head>
+<body>
+  <main class="scene">
+    <div class="moon"></div>
+    <section class="tree" aria-label="Світлова новорічна ялинка">
+      <div class="star"></div>
+      <div class="tier tier-5"></div>
+      <div class="tier tier-4"></div>
+      <div class="tier tier-3"></div>
+      <div class="tier tier-2"></div>
+      <div class="tier tier-1"></div>
+      <div class="trunk"></div>
+
+      <div class="garland" style="--width:32%;--height:18%;--bottom:68%"></div>
+      <div class="garland" style="--width:48%;--height:20%;--bottom:52%"></div>
+      <div class="garland" style="--width:68%;--height:23%;--bottom:35%"></div>
+
+      <div class="lights" id="lights"></div>
+    </section>
+    <h1 class="title">З Новим роком!</h1>
+  </main>
+  <div class="snow" id="snow" aria-hidden="true"></div>
+
+  <script>
+    const colors = ["#ffd45e", "#ff6b81", "#66d9ef", "#a8ff78", "#ffffff"];
+    const lights = document.getElementById("lights");
+
+    for (let i = 0; i < 58; i++) {
+      const bulb = document.createElement("span");
+      bulb.className = "bulb";
+      const row = Math.floor(i / 9);
+      const column = i % 9;
+      const center = 50;
+      const spread = 11 + row * 5.2;
+      bulb.style.left = `${center + (column - 4) * spread / 4 + (row % 2) * 3}%`;
+      bulb.style.top = `${10 + row * 12 + (column % 3) * 2}%`;
+      bulb.style.setProperty("--color", colors[i % colors.length]);
+      bulb.style.setProperty("--speed", `${0.7 + (i % 5) * 0.24}s`);
+      bulb.style.setProperty("--delay", `${-(i % 7) * 0.18}s`);
+      lights.appendChild(bulb);
+    }
+
+    const snow = document.getElementById("snow");
+    for (let i = 0; i < 150; i++) {
+      const flake = document.createElement("span");
+      flake.className = "flake";
+      flake.style.left = `${Math.random() * 100}%`;
+      flake.style.setProperty("--size", `${2 + Math.random() * 7}px`);
+      flake.style.setProperty("--duration", `${5 + Math.random() * 9}s`);
+      flake.style.setProperty("--delay", `${-Math.random() * 14}s`);
+      flake.style.setProperty("--drift", `${-80 + Math.random() * 160}px`);
+      snow.appendChild(flake);
+    }
+  </script>
+</body>
+</html>
