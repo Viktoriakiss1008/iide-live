@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#173b32">
+  <meta name="description" content="GPS-відстеження рейсів маршрутки та часу прибуття на зупинки.">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <title>GPS-трекер маршрутки</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <header class="hero">
+      <span class="eyebrow">Тестовий GPS-трекер</span>
+      <h1>Відстеження рейсу</h1>
+      <p>Телефон фіксує прибуття та відправлення біля зупинок за GPS-геозоною.</p>
+    </header>
+
+    <section class="notice" aria-label="Важливо">
+      <strong>Тестовий режим</strong>
+      <span>Дані зберігаються лише в цьому браузері. Відкрийте сторінку через HTTPS і дозвольте геолокацію. Не закривайте вкладку під час рейсу.</span>
+    </section>
+
+    <form class="panel" id="route-form">
+      <div class="section-heading">
+        <div>
+          <span class="section-kicker">Налаштування</span>
+          <h2>Маршрут і зупинки</h2>
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <label>
+          <span>Назва маршруту</span>
+          <input id="route-name" type="text" placeholder="Наприклад: Клевань — Рівне" required>
+        </label>
+        <label>
+          <span>Номер маршрутки</span>
+          <input id="vehicle-name" type="text" placeholder="Наприклад: ВК 1234 АА">
+        </label>
+        <label>
+          <span>Радіус зупинки, метрів</span>
+          <input id="geofence-radius" type="number" min="30" max="1000" step="10" value="100" required>
+        </label>
+      </div>
+
+      <div class="stops-heading">
+        <span class="field-title">Зупинки за порядком руху</span>
+        <button class="secondary-button small" id="add-stop" type="button">+ Додати</button>
+      </div>
+      <div class="stop-editor-list" id="stop-editor-list"></div>
+      <button class="primary-button" id="start-trip" type="submit">Почати рейс і GPS-відстеження</button>
+    </form>
+
+    <section class="panel tracking-panel" id="tracking-panel" hidden aria-labelledby="tracking-title">
+      <div class="section-heading">
+        <div>
+          <span class="section-kicker">Рейс активний</span>
+          <h2 id="tracking-title">GPS-відстеження</h2>
+        </div>
+        <span class="live-badge"><span></span> У русі</span>
+      </div>
+      <p class="tracking-route" id="tracking-route"></p>
+      <div class="gps-reading" aria-live="polite">
+        <strong id="gps-status">Очікуємо GPS-сигнал…</strong>
+        <span id="gps-position">Підключаємо геолокацію</span>
+      </div>
+      <ol class="stop-timeline" id="stop-timeline"></ol>
+      <button class="finish-button" id="finish-trip" type="button">Завершити рейс</button>
+    </section>
+
+    <section class="panel history-panel" aria-labelledby="history-title">
+      <div class="section-heading">
+        <div>
+          <span class="section-kicker">На цьому пристрої</span>
+          <h2 id="history-title">Історія рейсів</h2>
+        </div>
+        <button class="secondary-button small" id="export-history" type="button">Експорт CSV</button>
+      </div>
+      <div class="history-list" id="history-list" aria-live="polite"></div>
+    </section>
+
+    <p class="message" id="message" role="status" aria-live="polite"></p>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
