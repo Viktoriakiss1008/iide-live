@@ -5,9 +5,3 @@ services:
     buildCommand: ""
     startCommand: python public/server.py
     plan: free
-  - type: cron
-    name: iide-warm
-    runtime: python
-    schedule: "*/5 3-21 * * *"
-    buildCommand: ""
-    startCommand: python -c "import urllib.request; urllib.request.urlopen('https://iide-qq7o.onrender.com/api/health', timeout=20)"
