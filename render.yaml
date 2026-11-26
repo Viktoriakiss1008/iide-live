@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: iide
+    runtime: python
+    buildCommand: ""
+    startCommand: python public/server.py
+    plan: free
