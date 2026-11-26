@@ -24,6 +24,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\serve.ps1
 - Для водія: https://iide-qq7o.onrender.com/driver.html
 
 Сервер розгорнутий у Render через GitHub. Він не залежить від стану вашого ПК: працює, коли ПК вимкнений або увімкнений.
+Хмарний cron розігріває сервіс кожні 5 хвилин у робочому вікні.
 
 ## Доступ через інтернет
 
