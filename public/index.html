@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#173b32">
+  <meta name="description" content="Час прибуття приміських маршруток від водіїв у дорозі.">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <title>Їде — приміські маршрутки</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="board-page">
+  <main class="board-shell">
+    <header class="board-header">
+      <a class="brand" href="./" aria-label="Їде — на головну">
+        <span class="brand-mark" aria-hidden="true">ї</span>
+        <span>їде<span class="brand-period">.</span></span>
+      </a>
+      <a class="driver-link" href="driver.html">Я водій <span aria-hidden="true">↗</span></a>
+    </header>
+
+    <section class="board-hero">
+      <span class="eyebrow">Приміські маршрути</span>
+      <h1>Встигни на свою.</h1>
+      <p>Час прибуття оновлюють водії просто в дорозі.</p>
+      <label class="route-search">
+        <span aria-hidden="true">⌕</span>
+        <span class="visually-hidden">Пошук маршруту або зупинки</span>
+        <input id="route-search" type="search" placeholder="Знайти маршрут або зупинку">
+        <kbd>/</kbd>
+      </label>
+    </section>
+
+    <section class="board-content" aria-labelledby="routes-title">
+      <div class="board-section-heading">
+        <div>
+          <span class="section-kicker">Зараз у дорозі</span>
+          <h2 id="routes-title">Маршрутки поруч</h2>
+        </div>
+        <span class="live-label"><span></span> Оновлюється</span>
+      </div>
+      <div class="route-list" id="route-list" aria-live="polite"></div>
+      <p class="board-updated" id="board-updated"></p>
+    </section>
+
+    <aside class="board-notice">
+      <span class="notice-icon" aria-hidden="true">i</span>
+      <p><strong>Серверне табло.</strong> Тут показуються рейси, які водії опублікували на спільному сервері. Оновлення доступні з усіх пристроїв у мережі.</p>
+    </aside>
+    <footer class="board-footer">Час у дорозі змінюється. Перевіряйте оновлення перед виходом.</footer>
+  </main>
+  <script src="board.js"></script>
+</body>
+</html>
