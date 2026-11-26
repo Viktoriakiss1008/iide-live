@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#173b32">
+  <title>Оновити рейс — їде.</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="driver-page">
+  <main class="driver-shell">
+    <header class="board-header">
+      <a class="brand" href="./" aria-label="Повернутися до табло">
+        <span class="brand-mark" aria-hidden="true">ї</span>
+        <span>їде<span class="brand-period">.</span></span>
+      </a>
+      <a class="driver-link" href="./">Табло пасажирів <span aria-hidden="true">↗</span></a>
+    </header>
+
+    <section class="driver-hero">
+      <span class="eyebrow">Для водія</span>
+      <h1>Дайте знати, де ви.</h1>
+      <p>Оновіть зупинку та час прибуття — пасажири побачать актуальну інформацію на табло цього браузера.</p>
+    </section>
+
+    <aside class="driver-demo-notice">
+      <strong>Спільне серверне сховище</strong>
+      <span>Рейс публікується на сервер і одразу доступний пасажирам в інших пристроях.</span>
+    </aside>
+
+    <form class="driver-form" id="driver-form">
+      <label>
+        <span>Маршрут</span>
+        <input id="route-name" name="routeName" type="text" placeholder="Наприклад, Рівне — Клевань" maxlength="70" required>
+      </label>
+      <div class="driver-form-row">
+        <label>
+          <span>Номер маршрутки</span>
+          <input id="vehicle-name" name="vehicleName" type="text" placeholder="Наприклад, 123-45" maxlength="30">
+        </label>
+        <label>
+          <span>Напрямок</span>
+          <input id="direction" name="direction" type="text" placeholder="До Клевані" maxlength="50">
+        </label>
+      </div>
+      <label>
+        <span>Наступна зупинка</span>
+        <input id="next-stop" name="nextStop" type="text" placeholder="Наприклад, Залізничний вокзал" maxlength="70" required>
+      </label>
+      <div class="driver-form-row driver-arrival-row">
+        <label>
+          <span>Прибуття за, хвилин</span>
+          <input id="eta-minutes" name="etaMinutes" type="number" min="0" max="180" value="10" required>
+        </label>
+        <label>
+          <span>Ситуація на дорозі</span>
+          <select id="trip-status" name="status">
+            <option value="on-time">Їду за графіком</option>
+            <option value="delayed">Є затримка</option>
+            <option value="at-stop">Стою на зупинці</option>
+          </select>
+        </label>
+      </div>
+      <button class="publish-button" type="submit">Оновити час прибуття <span aria-hidden="true">→</span></button>
+      <p class="driver-message" id="driver-message" role="status" aria-live="polite"></p>
+    </form>
+
+    <section class="driver-active-trip" id="active-trip-panel" hidden>
+      <div class="driver-active-heading">
+        <div>
+          <span class="section-kicker">Опублікований рейс</span>
+          <h2 id="active-trip-name"></h2>
+        </div>
+        <span class="live-label"><span></span> Активний</span>
+      </div>
+      <p id="active-trip-summary"></p>
+      <button class="end-trip-button" id="end-trip" type="button">Завершити рейс</button>
+    </section>
+
+    <p class="driver-footnote">Вносьте час за власною оцінкою. Не користуйтеся телефоном під час руху.</p>
+  </main>
+  <script src="driver.js"></script>
+</body>
+</html>
