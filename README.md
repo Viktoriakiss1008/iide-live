@@ -18,6 +18,13 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\serve.ps1
 
 Рейси зберігаються на сервері в `.server-data/trips.json` і одразу доступні всім пристроям у мережі.
 
+## Постійний хмарний сервер
+
+- Табло: https://iide-qq7o.onrender.com/
+- Для водія: https://iide-qq7o.onrender.com/driver.html
+
+Сервер розгорнутий у Render через GitHub. Він не залежить від стану вашого ПК: працює, коли ПК вимкнений або увімкнений.
+
 ## Доступ через інтернет
 
 Зараз увімкнений публічний HTTPS-тунель:
