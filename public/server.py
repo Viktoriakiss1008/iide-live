@@ -46,7 +46,9 @@ class IideHandler(SimpleHTTPRequestHandler):
 
     def do_GET(self):
         path = urllib.parse.urlparse(self.path).path
-        if path == "/api/trips":
+        if path == "/api/health":
+            self.send_json(200, {"ok": True, "service": "iide"})
+        elif path == "/api/trips":
             self.send_json(200, read_trips())
         else:
             super().do_GET()
